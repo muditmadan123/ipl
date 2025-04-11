@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import zipfile
 
 # Load data
 
@@ -7,7 +8,10 @@ def load_data():
     matches_df = pd.read_csv("ipl_data/matches.csv")
     players_df = pd.read_csv("ipl_data/team_players_matches.csv")
     deliveries_df = pd.read_csv("ipl_data/deliveries_2025.csv")
-    matchup_df = pd.read_csv("ipl_data/deliveries.csv")
+    # matchup_df = pd.read_csv("ipl_data/deliveries.csv")
+    with zipfile.ZipFile("ipl_data/deliveries.csv.zip") as z:
+        with z.open("deliveries.csv") as f:
+            matchup_df = pd.read_csv(f)
     return matches_df, players_df, deliveries_df, matchup_df
 
 matches_df, players_df, deliveries_df, matchup_df = load_data()
